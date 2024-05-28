@@ -3,10 +3,13 @@ import { useNavigate } from "react-router-dom";
 import Usuario from "../../models/Usuario";
 import './Cadastro.css'
 import { cadastrarUsuario } from "../../services/Service";
+import { RotatingLines } from "react-loader-spinner";
 
 function Cadastro() {
 
   const navigate = useNavigate(); //Gerenciamento das rotas
+
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const [confirmaSenha, setConfirmaSenha] = useState<string>('');
 
@@ -32,7 +35,7 @@ function Cadastro() {
   function atualizarEstado(e: ChangeEvent<HTMLInputElement>) {
     setUsuario({
       ...usuario, //irá manter as informações já preenchidas
-      [e.target.name]: e.target.value 
+      [e.target.name]: e.target.value
     })
   }
 
@@ -45,6 +48,7 @@ function Cadastro() {
     e.preventDefault(); //previne que a pagina não seja recarregada quando clicar no enviar
 
     if (confirmaSenha === usuario.senha && usuario.senha.length >= 8) {
+      setIsLoading(true)
 
       try {
 
@@ -64,9 +68,9 @@ function Cadastro() {
       setConfirmaSenha('');
     }
 
-  }
+    setIsLoading(false)
 
-  console.log(JSON.stringify(usuario));
+  }
 
   return (
     <>
@@ -154,7 +158,16 @@ function Cadastro() {
             </button>
 
             <button type='submit' className='rounded text-white bg-indigo-400 hover:bg-indigo-900 w-1/2 py-2 flex justify-center'>
-              Cadastrar
+              
+              {isLoading ? <RotatingLines
+                strokeColor="white"
+                strokeWidth="5"
+                animationDuration="0.75"
+                width="24"
+                visible={true}
+              /> :
+                <span>Cadastrar</span>
+              }
             </button>
 
           </div>
