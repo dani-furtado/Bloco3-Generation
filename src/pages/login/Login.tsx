@@ -1,5 +1,5 @@
 import { ChangeEvent, useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
 import './Login.css';
 import UsuarioLogin from '../../models/UsuarioLogin';
@@ -89,7 +89,9 @@ function Login() {
 
                     <p>
                         Ainda não tem uma conta?{' '}
-                        Cadastre-se
+                        <Link to='/cadastro' className="text-indigo-800 hover:underline">
+                            Cadastre-se
+                        </Link>
                     </p>
                     
                 </form>
